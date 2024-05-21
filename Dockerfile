@@ -10,7 +10,7 @@ RUN bun install --production
 COPY src src
 # COPY public public
 
-ENV NODE_ENV production
+# ENV NODE_ENV production
 CMD ["bun", "src/index.js"]
 
 EXPOSE 4000
