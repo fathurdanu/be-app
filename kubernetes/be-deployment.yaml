@@ -23,7 +23,8 @@ spec:
           image: fathurdanu/be-app:1.0.2
           ports:
             - containerPort: 4000
-          resources:
-            limits:
-              memory: "2Gi"
-              cpu: "2"
+      tolerations:
+        - key: role
+          operator: Equal
+          value: spot
+          effect: NoSchedule
