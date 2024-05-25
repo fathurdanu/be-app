@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: be-app
-          image: fathurdanu/be-app:1.0.0
+          image: fathurdanu/be-app:1.0.2
           ports:
             - containerPort: 4000
           resources:
