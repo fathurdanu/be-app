@@ -6,29 +6,13 @@ on:
   pull_request:
     branches: [ "master" ]
 
-# env:
-#   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-#   GKE_CLUSTER: my-cluster    # Add your cluster name here.
-#   GKE_ZONE: asia-southeast2-a   # Add your cluster zone here.
-#   DEPLOYMENT_NAME: be-deployment # Add your deployment name here.
-#   IMAGE: static-site
-
 jobs:
-
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-
-      # # Setup gcloud CLI
-      # - name: install gcloud cli
-      #   uses: google-github-actions/setup-gcloud@v0
-      #   with:
-      #     project_id: ${{ secrets.GKE_PROJECT }}
-      #     service_account_key: ${{ secrets.GKE_SA_KEY }}
-      #     install_components: 'gke-gcloud-auth-plugin'
       
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -42,14 +26,6 @@ jobs:
           push: true
           tags: fathurdanu/be-app:1.0.2
 
-
-      # - name: deploy to gke
-      #   env: 
-      #     GOOGLE_PROJECT: ${{ secrets.GKE_PROJECT }}
-      #   run: |
-      #     gcloud container clusters get-credentials my-cluster --zone asia-southeast2-a
-      #     sed -i -e 's/DOCKER_IMG_TAG/'${{ github.sha }}'/' ./kubernetes/book-mgmt-api-deploy.yaml 
-      #     kubectl apply -f ./kubernetes/
   setup_and_deploy:
     needs: [push_to_registry]
 

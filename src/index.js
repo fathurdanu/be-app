@@ -2,10 +2,10 @@ import { Elysia, NotFoundError } from "elysia";
 import countries from "./data/countries.json"
 import cors from "@elysiajs/cors";
 
-const app = new Elysia().get("/", () => "Fathur Final Project").listen(3000);
+const app = new Elysia().get("/", () => "Fathur Final Project");
 app.use(cors())
 
-app.get("/", () => "Hello Elysia")
+app.get("/", () => "Hello Elysia v0.0.1")
 
 app.get("/countries", ({ query: { key_words } }) => {
   if (key_words) {
