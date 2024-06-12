@@ -55,3 +55,4 @@ jobs:
       run: |-
         kubectl apply -f ./kubernetes/be-deployment.yaml
         kubectl apply -f ./kubernetes/be-service.yaml
+        kubectl get services be-load-balancer-service
