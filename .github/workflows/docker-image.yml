@@ -49,6 +49,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: fathurdanu/be-app
+
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
@@ -62,7 +68,7 @@ jobs:
 
     - name: Deploy on the GKE
       run: |-
-        sed 's/TAG_VERSION/${{ github.ref }}/g' ./kubernetes/be-deployment-template.yaml > ./kubernetes/be-deployment.yaml
+        sed 's/TAG_VERSION/${{ steps.meta.outputs.tags }}/g' ./kubernetes/be-deployment-template.yaml > ./kubernetes/be-deployment.yaml
         kubectl apply -f ./kubernetes/be-deployment.yaml
         kubectl apply -f ./kubernetes/be-service.yaml
         kubectl get services be-load-balancer-service
