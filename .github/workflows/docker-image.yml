@@ -52,7 +52,7 @@ jobs:
 
     - name: Deploy on the GKE
       run: |-
-        sed 's/TAG_VERSION/${{ github.ref_name }}/g' be-deployment-template.yaml > be-deployment.yaml
+        sed 's/TAG_VERSION/${{ github.ref_name }}/g' ./kubernetes/be-deployment-template.yaml > ./kubernetes/be-deployment.yaml
         kubectl apply -f ./kubernetes/be-deployment.yaml
         kubectl apply -f ./kubernetes/be-service.yaml
         kubectl get services be-load-balancer-service
