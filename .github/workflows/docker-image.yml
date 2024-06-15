@@ -2,8 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
+    tags: [ v* ]
     branches: [ "master" ]
 
 jobs:
@@ -24,7 +23,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: fathurdanu/be-app:1.0.2
+          tags: fathurdanu/be-app:${{ github.ref_name }}
 
   setup_and_deploy:
     needs: [push_to_registry]
@@ -53,6 +52,7 @@ jobs:
 
     - name: Deploy on the GKE
       run: |-
+        sed -i 's/TAG_VERSION/${{ github.ref_name }}/g' be-deployment-template.yaml > be-deployment.yaml
         kubectl apply -f ./kubernetes/be-deployment.yaml
         kubectl apply -f ./kubernetes/be-service.yaml
         kubectl get services be-load-balancer-service
