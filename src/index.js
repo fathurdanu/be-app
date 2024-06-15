@@ -5,7 +5,7 @@ import cors from "@elysiajs/cors";
 const app = new Elysia();
 app.use(cors())
 
-app.get("/", () => "Hello Elysia v0.0.10")
+app.get("/", () => "Hello Elysia v0.0.11")
 
 app.get("/countries", ({ query: { key_words } }) => {
   if (key_words) {
